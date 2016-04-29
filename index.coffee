@@ -1,5 +1,5 @@
 request = require 'request'
-blacklistURL = 'http://gulpjs.com/plugins/blackList.json'
+BLACKLIST_URL = 'http://gulpjs.com/plugins/blackList.json'
 
 # call if defined as function
 call = (func, args) ->
@@ -11,7 +11,9 @@ getBlacklist = (arg1, arg2) ->
     if typeof arg1 is 'string'
         [url, callback] = [arg1, arg2]
     else if typeof arg1 is 'function'
-        [url, callback] = [blacklistURL, arg1]
+        [url, callback] = [BLACKLIST_URL, arg1]
+    else
+        throw new Error 'invalid argument(s).'
 
     request url, (error, res, body) ->
         if !error and res.statusCode is 200
@@ -20,25 +22,43 @@ getBlacklist = (arg1, arg2) ->
             call callback, [error, null]
 
 
-check = ({mode, path, name, failure, success})->
-    unless path? and name?
-        error = new Error 'one of path or name properties is required in the argument.'
-        if mode is 'strict' then throw error
-        call failure, [error]
-
+check = (arg1, arg2)->
+    if typeof arg1 is 'object'
+        [{mode, path, names, blacklistURL}, callback] = [arg1, arg2]
+    else if typeof arg1 is 'function'
+        [{mode, path, names, blacklistURL}, callback] = [{}, arg1]
     else
-        getBlacklist {
-            success: (list) ->
-                result = name in Object.keys list
-                if result
-                    reason = list[name]
-                    message = "[notice] package `#{name}` is blacklisted, for #{reason}"
+        throw new Error 'invalid argument(s).'
+
+    if names?
+        if typeof names isnt Array
+            names = [names]
+    else
+        unless path? then path = './'
+        {dependencies, devDependencies} =
+            dependencies: Object.keys require("#{path}package.json").dependencies
+            devDependencies: Object.keys require("#{path}package.json").devDependencies
+        names = dependencies.concat devDependencies
+
+
+    url = if blacklistURL? then blacklistURL else BLACKLIST_URL
+    getBlacklist url, (error, list) ->
+        if error?
+            call callback, [error, null]
+        else
+            message = ''
+            result = false
+            for name in names
+                isBlacklisted = name in Object.keys list
+                result = result and isBlacklisted
+                if isBlacklisted
+                    message += "[notice] package `#{name}` is blacklisted, for #{list[name]}\n"
                 else
-                    message = "[information] package `#{name}` is not blacklisted."
-                if typeof this.arguments[0].callback is 'function'
-                    console.log message
-                    arguments[0].callback result
-        }
+                    message += "[information] package `#{name}` is not blacklisted.\n"
+
+            console.log message
+            call callback, [null, result]
 
 
-module.exports = {blacklistURL, call, getBlacklist, check}
+
+module.exports = {BLACKLIST_URL, call, getBlacklist, check}

@@ -33,7 +33,7 @@ describe 'test of `getBlacklist` method', ->
             done()
 
     it 'should return blacklist with 1st argument of url', (done) ->
-        app.getBlacklist app.blacklistURL, (error, blacklist) ->
+        app.getBlacklist app.BLACKLIST_URL, (error, blacklist) ->
             should(error).not.be.ok()
             (typeof blacklist).should.equal 'object'
             done()
@@ -41,29 +41,20 @@ describe 'test of `getBlacklist` method', ->
 
 describe 'test of `check` method', ->
 
-    it 'should fail without path and name arguments', (done) ->
-        app.check {}, (error, result) ->
-            (error instanceof Error).should.be.true()
-            result.should.equal null
-            done()
-
-    it 'should fail without path and name arguments in strict mode', (done) ->
-        try
-          app.check { mode: 'strict' }
-        catch error
-            (error instanceof Error).should.be.true()
+    it 'should success without arguments.', (done) ->
+        app.check (error, result) ->
+            should(error).not.be.ok()
+            (typeof result).should.equal 'boolean'
             done()
 
     it 'should success with path arguments.', (done) ->
         app.check { path: './' }, (error, result) ->
-            error.should.equal null
-            result.should.be.true()
+            should(error).not.be.ok()
+            (typeof result).should.equal 'boolean'
             done()
 
-    # it "should check if the module named as property 'package' is blacklisted.", (done) ->
-    #     app.check {
-    #         package: 'gulp-coffee'
-    #         callback: (result, error) ->
-    #             (typeof result).should.equal 'boolean'
-    #             done()
-    #     }
+    it 'should fail with nonsense url.', (done) ->
+        app.check { path: './', blacklistURL:'http://nonsense-ur.l' }, (error, result) ->
+            (error instanceof Error).should.be.true()
+            should(result).not.be.ok()
+            done()
