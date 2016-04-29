@@ -7,6 +7,17 @@ describe 'test of test', ->
         true.should.equal true
 
 
+describe 'test of `call` method', ->
+
+    it 'should do nothing without function', ->
+        app.call 'with non-function arguments.'
+
+    it 'should call function with argument.', (done) ->
+        func = (done) ->
+            done()
+        app.call func, [done]
+
+
 describe 'test of `getBlacklist` method', ->
 
     it 'should failes with a nonsense url argument', (done) ->
