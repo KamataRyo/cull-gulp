@@ -7,15 +7,17 @@ call = (func, args) ->
         func.apply null, args
 
 
-getBlacklist = ({url, failure, success}) ->
-    unless url? then url = blacklistURL
+getBlacklist = (arg1, arg2) ->
+    if typeof arg1 is 'string'
+        [url, callback] = [arg1, arg2]
+    else if typeof arg1 is 'function'
+        [url, callback] = [blacklistURL, arg1]
 
     request url, (error, res, body) ->
         if !error and res.statusCode is 200
-            call success, [JSON.parse body]
+            call callback, [null, JSON.parse body]
         else
-            if typeof failure is 'function'
-                call failure, [error]
+            call callback, [error, null]
 
 
 check = ({mode, path, name, failure, success})->
@@ -39,4 +41,4 @@ check = ({mode, path, name, failure, success})->
         }
 
 
-module.exports = {call, getBlacklist, check}
+module.exports = {blacklistURL, call, getBlacklist, check}
