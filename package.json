@@ -24,6 +24,15 @@
     "should": "^8.3.1"
   },
   "dependencies": {
+    "commander": "^2.9.0",
     "request": "^2.72.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KamataRyo/gulp-blacklisted.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KamataRyo/gulp-blacklisted/issues"
+  },
+  "homepage": "https://github.com/KamataRyo/gulp-blacklisted#readme"
 }
