@@ -44,13 +44,15 @@ describe 'test of `check` method', ->
     it 'should success without arguments.', (done) ->
         app.check (error, result) ->
             should(error).not.be.ok()
-            (typeof result).should.equal 'boolean'
+            (typeof result.isBlacklisted).should.equal 'boolean'
+            (Array.isArray result.blacklist).should.be.true()
             done()
 
     it 'should success with path arguments.', (done) ->
         app.check { path: './' }, (error, result) ->
             should(error).not.be.ok()
-            (typeof result).should.equal 'boolean'
+            (typeof result.isBlacklisted).should.equal 'boolean'
+            (Array.isArray result.blacklist).should.be.true()
             done()
 
     it 'should fail with nonsense url.', (done) ->

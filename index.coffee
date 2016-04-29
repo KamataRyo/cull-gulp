@@ -47,11 +47,14 @@ check = (arg1, arg2)->
             call callback, [error, null]
         else
             message = ''
-            result = false
+            result =
+                isBlacklisted: false
+                blacklist: []
             for name in names
                 isBlacklisted = name in Object.keys list
-                result = result and isBlacklisted
+                result.isBlacklisted = result.isBlacklisted and isBlacklisted
                 if isBlacklisted
+                    result.blacklist.push name
                     message += "[notice] package `#{name}` is blacklisted, for #{list[name]}\n"
                 else
                     message += "[information] package `#{name}` is not blacklisted.\n"
