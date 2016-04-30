@@ -23,21 +23,22 @@ getBlacklist = (arg1, arg2) ->
 
 
 check = (arg1, arg2)->
+    strict = false
+    path = '.'
     if typeof arg1 is 'object'
-        [{mode, path, names, blacklistURL}, callback] = [arg1, arg2]
+        [{strict, path, names, blacklistURL}, callback] = [arg1, arg2]
     else if typeof arg1 is 'function'
-        [{mode, path, names, blacklistURL}, callback] = [{}, arg1]
+        [{strict, path, names, blacklistURL}, callback] = [{}, arg1]
     else
         throw new Error 'invalid argument(s).'
 
     if names?
         if typeof names isnt Array
             names = [names]
-    else
-        unless path? then path = './'
+
         {dependencies, devDependencies} =
-            dependencies: Object.keys require("#{path}package.json").dependencies
-            devDependencies: Object.keys require("#{path}package.json").devDependencies
+            dependencies: Object.keys require("#{path}/package.json").dependencies
+            devDewget pendencies: Object.keys require("#{path}/package.json").devDependencies
         names = dependencies.concat devDependencies
 
 
