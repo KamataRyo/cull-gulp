@@ -10,6 +10,12 @@ gulp.task 'coffee-app', ->
         .pipe coffee bare:false
         .pipe gulp.dest './'
 
+gulp.task 'coffee-spec', ->
+    gulp.src ['/spec/*.coffee']
+        .pipe plumber()
+        .pipe coffee bare:false
+        .pipe gulp.dest './spec/'
+
 gulp.task 'coffee-bin', ->
     gulp.src './bin/*.coffee'
         .pipe plumber()
@@ -19,4 +25,4 @@ gulp.task 'coffee-bin', ->
         .pipe chmod 755
         .pipe gulp.dest './bin/'
 
-gulp.task 'coffee', ['coffee-app', 'coffee-bin']
+gulp.task 'coffee', ['coffee-app', 'coffee-spec', 'coffee-bin']

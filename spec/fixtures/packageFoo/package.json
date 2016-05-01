@@ -1,0 +1,9 @@
+{
+    "dependencies": {
+        "gulp-foo": "^1.0.0"
+    },
+    "devDependencies": {
+        "gulp-bar": "^1.0.0",
+        "gulp-baz": "^1.0.0"
+    }
+}

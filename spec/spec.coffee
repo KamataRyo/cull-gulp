@@ -1,4 +1,4 @@
-BlackList = require './BlackList'
+BlackList = require '../BlackList'
 should    = require 'should'
 express   = require 'express' # create mock server
 
