@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js coffee",
-    "unit-test": "./node_modules/mocha/bin/mocha ./spec.js",
+    "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
     "if-compiled": "ls ./index.js",
     "test": "npm run build; npm run if-compiled; npm run unit-test;"
   },

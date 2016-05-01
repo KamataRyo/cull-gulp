@@ -1,4 +1,5 @@
 {
+    "description": "this package is dummy and blacklisted in the test.",
     "dependencies": {
         "gulp-foo": "^1.0.0"
     },

@@ -11,7 +11,7 @@ gulp.task 'coffee-app', ->
         .pipe gulp.dest './'
 
 gulp.task 'coffee-spec', ->
-    gulp.src ['/spec/*.coffee']
+    gulp.src ['./spec/*.coffee']
         .pipe plumber()
         .pipe coffee bare:false
         .pipe gulp.dest './spec/'

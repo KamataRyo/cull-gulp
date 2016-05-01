@@ -1,0 +1,6 @@
+{
+    "description": "this package is dummy and not blacklisted in the test.",
+    "dependencies": {
+        "gulp-baz": "^1.0.0"
+    }
+}
