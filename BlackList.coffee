@@ -1,5 +1,4 @@
 request = require 'request'
-BLACKLIST_URL = 'http://gulpjs.com/plugins/blackList.json'
 
 class BlackList
     constructor: (arg) ->

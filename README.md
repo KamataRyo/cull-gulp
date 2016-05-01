@@ -2,31 +2,29 @@
 
 [![Build Status](https://travis-ci.org/KamataRyo/gulp-blacklisted.svg?branch=master)](https://travis-ci.org/KamataRyo/gulp-blacklisted)
 
-This is under development.
+This checks if blacklisted plugins are included.
 
-## specs
+## As CLI tool
 
-### As CLI tool
-
-```
-# examine the project's package.json
-$ gulp-blacklisted /path/to/the/project
-# examine certine npm if `gulp-foo` blacklisted
-$ gulp-blacklisted gulp-foo
-```
-
-## As a module required
+### examine a project
 
 ```
-bl = require 'gulp-blacklisted'
-bl() // check module.children[n].id
-bl {strict: true} // check module.children and raise error if blacklisted
-bl.check {path: 'path/to/the/project'} // check certain project
-bl.check {name: 'path/to/the/project'} // check certain project
-
+gulp-blacklisted --path=path/to/project/root
 ```
 
-### As gulp-plugin
+### examine a specific module
+
+```
+gulp-blacklisted --name=gulp-foo
+```
+
+### stdout if blacklisted
+
+```
+gulp-blacklisted --path=path/to/project/root --strict
+```
+
+## As gulp-plugin *under dev*
 
 ```
 #check if required module blacklisted

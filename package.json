@@ -1,16 +1,18 @@
 {
   "name": "gulp-blacklisted",
   "version": "1.0.0",
-  "description": "This checks if your dependencies blacklisted.",
+  "description": "check if your dependencies blacklisted.",
   "main": "index.js",
+  "bin": "./bin/gulp-blacklisted",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js coffee",
     "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
-    "if-compiled": "ls ./index.js",
+    "if-compiled": "ls ./bin/gulp-blacklisted; ls ./BlackList.js; ls ./index.js",
     "test": "npm run build; npm run if-compiled; npm run unit-test;"
   },
   "keywords": [
     "gulp",
+    "plugins",
     "blacklist"
   ],
   "author": "KamataRyo",
@@ -24,7 +26,6 @@
     "gulp-path": "^3.0.3",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sketch": 1,
     "mocha": "^2.4.5",
     "should": "^8.3.1"
   },
