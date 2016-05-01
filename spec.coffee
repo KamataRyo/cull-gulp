@@ -1,17 +1,58 @@
-lib    = require './lib'
-should = require 'should'
+lib     = require './lib'
+should  = require 'should'
+express = require 'express' # create mock server
+
 
 describe 'test of test', ->
-    it 'should works well.', ->
+    it 'should work well.', ->
         true.should.be.true()
 
 
-describe 'test of `refresh` method', ->
+describe 'class `BlackList`, ', ->
 
-    it 'should refresh blackList.json', ->
+    # prepare examples
+    blackListValidExample =
+        'gulp-foo': 'blacklisted one.'
+        'gulp-bar': 'blacklisted one.'
+
+    # create mock server
+    app = null
+    hostname = 'localhost'
+    port = 3000
+    before ->
+        app = require('express')()
+        app.get '/', (req, res) ->
+            rew.header 'content-type', 'application/json'
+            res.send blackListValidExample
+        app.listen port, hostname
+
+    describe 'constructor, ', ->
+        it 'should be a prototype function.', ->
+            (typeof lib.BlackList).should.be.exactly 'function'
+
+        it 'should accept blackList as an object.', (done) ->
+            blackList = new BlackList blackListValidExample
+            (typeof blackList).should.be.exactly 'function'
+
+        it 'should accept url asynchronously.', (done) ->
+            blackList = new Blacklist 'http://someURLasString'
+            blackList.should.have.property 'then'
+            blackList.catch (error) ->
+                (error instanceof Error).should.be.true()
+                done()
+
+        it 'should be polimorphically thenable after it accept blacklist object.', (done) ->
+            blackList = new BlackList blackListValidExample
+            blackList.should.have.property 'then'
+            blackList.then (instance) ->
+                (error instanceof Error).should.be.true()
+                done()
 
 
 
+return
+
+`
 describe 'test of `call` method', ->
 
     it 'should do nothing without function', () ->

@@ -1,6 +1,16 @@
 request = require 'request'
 BLACKLIST_URL = 'http://gulpjs.com/plugins/blackList.json'
 
+class BlackList
+    constructor: (arg) ->
+        if typeof arg is ''
+
+
+
+return
+
+
+`
 # call if defined as function
 call = (func, args) ->
     if typeof func is 'function'
