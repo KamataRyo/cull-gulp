@@ -37,13 +37,14 @@ describe 'class `BlackList`', ->
                 (error instanceof Error).should.be.true()
                 done()
 
-        it 'should be polimorphically thenable after it accept synchronously blacklist as an object.', (done) ->
+        it 'should accept blacklist as an object asynchronously.(make it polimorphic to url request)', (done) ->
             blackList = new BlackList blackListValidExample
-            (typeof blackList).should.be.exactly 'object'
             blackList.should.have.property 'then'
             blackList.then (instance) ->
                 instance.list.should.be.equal blackListValidExample
                 done()
+
+
 
 
 
