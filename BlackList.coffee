@@ -5,23 +5,64 @@ class BlackList
     constructor: (arg) ->
         if typeof arg is 'string'
             @path = arg
-            return new Promise (resolve) =>
-                request
-                    .get @path
-                    .then (list) =>
-                        @list = list
-                        resolve @
-                    .catch (error) ->
-                        throw error # http request error
+            return new Promise (resolve, reject) =>
+                request @path, (error, res, body) =>
+                    if !error and res.statusCode is 200
+                        # depends on server settings
+                        if typeof body is 'string'
+                            @list = JSON.parse body
+                            resolve @
+                        else if typeof body is 'object'
+                            @list = body
+                            resolve @
+                        else
+                            reject new Error 'unknown server response type.'
+                    else
+                        reject error # http request error
 
         else if typeof arg is 'object'
             @list = arg
             return new Promise (resolve) =>
                 resolve @
         else
-            throw new Error 'invalid argument.'
+            return new promise(resolve, reject) =>
+                reject new Error 'invalid argument.'
 
 
+    check: (id, {strict, quiet}) ->
+        unless strict? then strict = false
+        unless quiet? then quiet = false
+
+        blackListed = id in Object.keys @list
+        if blackListed
+            message = "[notice] `#{id}` is blacklisted,for #{@list[id]}"
+        else
+            message = "[information] `#{id}` is not blacklisted."
+
+        if !quiet
+            console.log message
+
+        if (strict is true) and blackListed
+            throw new Error message
+        else
+            return blackListed
+
+
+
+    checkPackage: (path, {strict, quiet, dependencies, devDependencies}) ->
+        unless strict? then strict = false
+        unless quiet? then quiet = false
+        unless dependencies then dependencies = true
+        unless devDependencies then devDependencies = true
+
+        meta = require "#{path}/package.json"
+        ids = []
+        if dependencies
+            ids = ids.concat Object.keys meta.dependencies
+        if devDependencies
+            ids = ids.concat Object.keys meta.devDependencies
+        for id in ids
+            @check id, {strict, quiet}
 
 module.exports = BlackList
 
