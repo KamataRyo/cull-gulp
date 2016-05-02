@@ -36,3 +36,4 @@ new CullGulp meta.blackListURL
         action cullGulp
     .catch (error) ->
         console.error error
+        process.exit 1
