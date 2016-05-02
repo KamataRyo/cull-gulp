@@ -1,51 +1,37 @@
-# gulp-blacklisted
+# cull-gulp
 
-[![Build Status](https://travis-ci.org/KamataRyo/gulp-blacklisted.svg?branch=master)](https://travis-ci.org/KamataRyo/gulp-blacklisted)
+[![Build Status](https://travis-ci.org/KamataRyo/cull-gulp.svg?branch=master)](https://travis-ci.org/KamataRyo/cull-gulp)
 
-This checks if blacklisted plugins are included.
+This package checks blacklisted gulpplugins.
+This is not gulp plugin.
 
-## As CLI tool
+## As a CLI tool
 
-### examine a project
-
-```
-gulp-blacklisted --path=path/to/project/root
-```
-
-### examine a specific module
+### examine a local node project
 
 ```
-gulp-blacklisted --name=gulp-foo
+cull-gulp --path=path/to/project/root
 ```
 
-### stdout if blacklisted
+### examine a specific module name
 
 ```
-gulp-blacklisted --path=path/to/project/root --strict
+cull-gulp --name=gulp-foo
 ```
 
-## As gulp-plugin *under dev*
+### throw error to stderr if blacklisted
 
 ```
-#check if required module blacklisted
-foo         = require 'gulp-foo' // blacklisted
-bar         = require 'gulp-bar'
-blacklisted = require 'gulp-blacklisted'
-
-gulp.task 'task', ->
-    gulp.src 'src'
-        .pipe blacklisted strict:false // do nothing in the stream
-        .pipe foo()
-        .pipe bar()
-        .pipe dest 'dest'
-
-// task above notice like below;
-// [notice] module 'gulp-foo' is gulp-blacklisted.
-// or on strict mode (strict:true)
-// [error] module 'gulp-foo' is gulp-blacklisted.
+cull-gulp --path=path/to/project/root --strict
 ```
 
-### usage
-#### for developmental environment purification
+## Inside gulpfile.js
 
-Save time to select gulp-plugins.
+```
+require('cull-gulp')({strict:true});// throw error and stop  if blacklisted plugin are required.
+```
+
+## what for?
+
+- simplify your developmental environment.
+- save time to select gulp-plugin.

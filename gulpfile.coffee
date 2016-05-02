@@ -1,36 +1,24 @@
 gulp    = require 'gulp'
-plumber = require 'gulp-plumber'
 coffee  = require 'gulp-coffee'
-rename  = require 'gulp-rename'
-chmod   = require 'gulp-chmod'
+meta = require './package.json'
 
 gulp.task 'coffee-app', ->
     gulp.src ['./*.coffee', '!./gulpfile.coffee']
-        .pipe plumber()
         .pipe coffee bare:false
         .pipe gulp.dest './'
 
 gulp.task 'coffee-spec', ->
     gulp.src ['./spec/*.coffee']
-        .pipe plumber()
         .pipe coffee bare:false
         .pipe gulp.dest './spec/'
 
 gulp.task 'coffee-bin', ->
-    gulp.src './bin/*.coffee'
-        .pipe plumber()
-        .pipe coffee bare:true
-        .pipe rename (path) ->
-            path.extname = ''
-        .pipe chmod 755
+    gulp.src ['./bin/*.coffee']
+        .pipe coffee bare:false
         .pipe gulp.dest './bin/'
 
+
+gulp.task 'test', ->
+    test = require('./index')({scope: module, quiet:false})
+
 gulp.task 'coffee', ['coffee-app', 'coffee-spec', 'coffee-bin']
-
-
-blacklisted = require './index'
-
-gulp.task 'test-plugin', ->
-    gulp.src './gulpfile.coffee'
-        .pipe coffee()
-        .pipe blacklisted {scope: 'project', quiet:false}

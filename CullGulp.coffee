@@ -1,7 +1,7 @@
 request = require 'request'
-unless Promise? then Promise = require 'es6-promise'
+# unless Promise? then Promise = require 'es6-promise'
 
-class BlackList
+class CullGulp
     constructor: (arg) ->
         if typeof arg is 'string'
             @path = arg
@@ -16,7 +16,7 @@ class BlackList
                             @list = body
                             resolve @
                         else
-                            reject new Error 'unknown server response type.'
+                            reject new Error 'invalid server response.'
                     else
                         reject error # http request error
 
@@ -70,6 +70,9 @@ class BlackList
               if blackListed is false then blackListed = {}
               blackListed[id] = @list[id]
 
+        if !quiet and !blackListed
+            console.log '[information] No blackListed gulp plugin found.'
+
         if (strict is true) and blackListed
             throw new Error '[notice] some modules are blackListed.',
 
@@ -78,4 +81,4 @@ class BlackList
 
 
 
-module.exports = BlackList
+module.exports = CullGulp
