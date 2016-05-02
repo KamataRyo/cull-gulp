@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "check if your dependencies blacklisted.",
   "main": "index.js",
-  "engines" : {
-      "node" : ">=0.11 <0.12"
+  "engines": {
+    "node": ">=0.10 <0.12"
   },
   "bin": "./bin/gulp-blacklisted",
   "scripts": {
@@ -30,11 +30,14 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "mocha": "^2.4.5",
-    "should": "^8.3.1"
+    "should": "^8.3.1",
+    "gulp-sketch": ""
   },
   "dependencies": {
     "commander": "^2.9.0",
-    "request": "^2.72.0"
+    "es6-promise": "^3.1.2",
+    "request": "^2.72.0",
+    "through2": "^2.0.1"
   },
   "repository": {
     "type": "git",
@@ -43,5 +46,6 @@
   "bugs": {
     "url": "https://github.com/KamataRyo/gulp-blacklisted/issues"
   },
-  "homepage": "https://github.com/KamataRyo/gulp-blacklisted#readme"
+  "homepage": "https://github.com/KamataRyo/gulp-blacklisted#readme",
+  "blackListURL": "http://gulpjs.com/plugins/blackList.json"
 }

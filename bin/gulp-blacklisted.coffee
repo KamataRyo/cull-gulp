@@ -3,6 +3,8 @@
 
 app = require 'commander'
 BlackList = require ('../BlackList')
+meta = require '../package.json'
+
 
 app
     .version require('../package.json').version
@@ -27,7 +29,7 @@ else if name?
         blackList.check name, {strict, quiet}
 
 
-new BlackList 'http://gulpjs.com/plugins/blackList.json'
+new BlackList meta.blackListURL
     .then (blackList) ->
         action blackList
     .catch (error) ->

@@ -26,3 +26,11 @@ gulp.task 'coffee-bin', ->
         .pipe gulp.dest './bin/'
 
 gulp.task 'coffee', ['coffee-app', 'coffee-spec', 'coffee-bin']
+
+
+blacklisted = require './index'
+
+gulp.task 'test-plugin', ->
+    gulp.src './gulpfile.coffee'
+        .pipe coffee()
+        .pipe blacklisted {scope: 'project', quiet:false}

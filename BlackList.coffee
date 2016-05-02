@@ -1,4 +1,5 @@
 request = require 'request'
+unless Promise? then Promise = require 'es6-promise'
 
 class BlackList
     constructor: (arg) ->
