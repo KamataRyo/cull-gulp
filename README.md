@@ -7,7 +7,7 @@ This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com
 ## what for?
 
 - simplify your developmental environment.
-- save time to select gulp-plugin when setting your project up.
+- save time to select gulpplugins when setting your project up.
 
 ## install
 
@@ -31,10 +31,17 @@ npm install -g cull-gulp
 cull-gulp --path=path/to/project/root
 ```
 
+### without arguments
+
+```
+# refer current directory
+cull-gulp
+```
+
 ### examine a specific module name
 
 ```
-cull-gulp --name=gulp-foo
+cull-gulp --module=gulp-foo
 ```
 
 ### throw error and exit with 1 if blacklisted
@@ -46,11 +53,12 @@ cull-gulp --path=path/to/project/root --strict
 ## usage
 
 ### with package.json
+
 ```
 # stop npm test if some plugins are marked as blacklist
 {
     scripts: {
-        "cull": "./bin/cull-gulp --strict --quiet",
+        "cull": "./bin/cull-gulp --strict --quiet", # refer current directory without any option
         "pretest": "set -e; npm run cull",
         "test": "# do test here"
     }
@@ -58,6 +66,7 @@ cull-gulp --path=path/to/project/root --strict
 ```
 
 ### inside .travis.yml
+
 ```
 # stop CI if some plugins are marked as blacklist
 script:

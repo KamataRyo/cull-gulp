@@ -1,7 +1,6 @@
-app = require 'commander'
+app      = require 'commander'
 CullGulp = require '../CullGulp'
-meta = require '../package.json'
-
+meta     = require '../package.json'
 
 app
     .version require('../package.json').version
@@ -18,17 +17,17 @@ quiet = app.quiet?
 
 if path?
     unless path[0] in ['/', '~']
-        path = __dirname + '/../' + path
+        path = process.cwd() + '/' + path
+        console.log path
     action = (cullGulp) ->
         cullGulp.checkPackage path, {strict, quiet}
 else if name?
     action = (cullGulp) ->
         cullGulp.check name, {strict, quiet}
 else
-    path = __dirname + '/../'
+    path = process.cwd()
     action = (cullGulp) ->
         cullGulp.checkPackage path, {strict, quiet}
-
 
 
 new CullGulp meta.blackListURL

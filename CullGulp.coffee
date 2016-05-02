@@ -35,9 +35,9 @@ class CullGulp
 
         blackListed = id in Object.keys @list
         if blackListed
-            message = "[notice] `#{id}` is blacklisted,for #{@list[id]}"
+            message = "[notice] `#{id}` is marked in blacklist. #{@list[id]}"
         else
-            message = "[information] `#{id}` is not blacklisted."
+            message = "[information] `#{id}` is not marked in the blacklist."
 
         if !quiet
             console.log message
@@ -71,10 +71,10 @@ class CullGulp
               blackListed[id] = @list[id]
 
         if !quiet and !blackListed
-            console.log '[information] No blackListed gulp plugin found.'
+            console.log '[information] No gulpplugins marked in the blackList found.'
 
         if (strict is true) and blackListed
-            throw new Error '[notice] some modules are blackListed.',
+            throw new Error '[notice] some gulpplugins are marked in the blackList.',
 
         return blackListed
 
