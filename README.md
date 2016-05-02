@@ -2,8 +2,26 @@
 
 [![Build Status](https://travis-ci.org/KamataRyo/cull-gulp.svg?branch=master)](https://travis-ci.org/KamataRyo/cull-gulp)
 
-This package checks blacklisted gulpplugins.
-This is not gulp plugin.
+This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com/plugins/blackList.json).
+
+## what for?
+
+- simplify your developmental environment.
+- save time to select gulp-plugin when setting your project up.
+
+## install
+
+### for your project
+
+```
+npm install --save-dev cull-gulp
+```
+
+### or global
+
+```
+npm install -g cull-gulp
+```
 
 ## As a CLI tool
 
@@ -19,19 +37,31 @@ cull-gulp --path=path/to/project/root
 cull-gulp --name=gulp-foo
 ```
 
-### throw error to stderr if blacklisted
+### throw error and exit with 1 if blacklisted
 
 ```
 cull-gulp --path=path/to/project/root --strict
 ```
 
-## Inside gulpfile.js
+## usage
 
+### with package.json
 ```
-require('cull-gulp')({strict:true});// throw error and stop  if blacklisted plugin are required.
+# stop npm test if some plugins are marked as blacklist
+{
+    scripts: {
+        "cull": "./bin/cull-gulp --strict --quiet",
+        "pretest": "set -e; npm run cull",
+        "test": "# do test here"
+    }
+}
 ```
 
-## what for?
-
-- simplify your developmental environment.
-- save time to select gulp-plugin.
+### inside .travis.yml
+```
+# stop CI if some plugins are marked as blacklist
+script:
+  - "set -e"
+  - "./bin/cull-gulp --strict"
+  - "npm test"
+```

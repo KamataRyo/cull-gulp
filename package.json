@@ -10,10 +10,11 @@
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js coffee",
     "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
-    "if-compiled": "ls ./bin/cull-gulp; ls ./BlackList.js; ls ./index.js",
-    "cull-blackList": "./bin/cull-gulp --strict --quiet",
-    "pretest": "set -e;npm run build; npm run cull-blackList",
-    "test": "npm run if-compiled; npm run unit-test;"
+    "if-compiled": "ls ./bin/bin.js; ls ./CullGulp.js",
+    "cull": "./bin/cull-gulp --strict --quiet",
+    "pretest": "set -e;npm run build; npm run cull",
+    "test": "npm run if-compiled; npm run unit-test;",
+    "postinstall":"npm run build"
   },
   "keywords": [
     "gulp",
