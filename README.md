@@ -3,10 +3,14 @@
 [![Build Status](https://travis-ci.org/KamataRyo/cull-gulp.svg?branch=master)](https://travis-ci.org/KamataRyo/cull-gulp)
 [![npm version](https://badge.fury.io/js/cull-gulp.svg)](https://badge.fury.io/js/cull-gulp)
 ![dependencies](https://david-dm.org/KamataRyo/cull-gulp.svg)
-[![codecov.io](https://codecov.io/github/KamataRyo/cull-gulp/coverage.svg?branch=master)](https://codecov.io/github/KamataRyo/cull-gulp?branch=master)
+![codecov.io](https://codecov.io/github/KamataRyo/cull-gulp/coverage.svg?branch=master)
 
 
 This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com/plugins/blackList.json).
+
+![screenshot](./assets/screenshot-01.png)
+
+
 
 ## what for?
 
@@ -18,63 +22,72 @@ This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com
 ### for your project
 
 ```
-npm install --save-dev cull-gulp
+$ npm install --save-dev cull-gulp
 ```
 
 ### or in global
 
 ```
-npm install -g cull-gulp
+$ npm install -g cull-gulp
 ```
 
-## As a CLI tool
+## Usage Example
 
-### examine a local node project
+### examine a specific local node project
 
 ```
-cull-gulp --path=path/to/project/root
+$ cull-gulp --path=path/to/project/root
+
+[information] 'gulp-foo' is not marked in the blacklist.
+[information] 'gulp-bar' is not marked in the blacklist.
+[information] 'gulp-baz' is not marked in the blacklist.
+[ok] No gulpplugins marked in the blackList found.
 ```
 
 ### without arguments
 
 ```
-# refer current directory
-cull-gulp
+$ cull-gulp # refers current directory
 ```
 
 ### examine a specific module name
 
 ```
-cull-gulp --module=gulp-foo
+$ cull-gulp --module=gulp-foo2
+
+[warn] 'gulp-foo2' is marked in blacklist.
+ ┗━[reason] duplicate of gulp-foo
 ```
 
-### throw error and exit with 1 if blacklisted
+### options
 
-```
-cull-gulp --path=path/to/project/root --strict
-```
+`--strict` raises error.
+See `$ cull-gulp --help` for the others.
 
 ## usage
 
 ### with package.json
 
+You can stop `npm test` if some plugins are marked as blacklist.
+
 ```
-# stop npm test if some plugins are marked as blacklist
 {
     scripts: {
-        "cull": "./bin/cull-gulp --strict --quiet", # refer current directory without any option
-        "pretest": "set -e; npm run cull",
-        "test": "# do test here"
+        "pretest": "set -e; ./node_modules/.bin/cull-gulp --strict --quiet",
+        "test": "# do test"
     }
 }
 ```
 
 ### inside .travis.yml
 
+You can stop CI if some plugins are marked as blacklist
+
 ```
-# stop CI if some plugins are marked as blacklist
+before_script:
+  - "npm install -g cull-gulp"
 script:
   - "set -e"
-  - "./bin/cull-gulp --strict"
+  - "cull-gulp --strict"
   - "npm test"
 ```

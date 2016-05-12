@@ -35,9 +35,11 @@ class CullGulp
                 throw new Error ErrorText 'Error', 'invalid arguments.'
 
 
-    check: (id, {strict, quiet}) ->
+    check: (id, {strict, quiet, throwError}) ->
         unless strict? then strict = false
         unless quiet? then quiet = false
+        unless throwError? then throwError = false
+
 
         blackListed = id in Object.keys @list
         if blackListed
@@ -47,13 +49,10 @@ class CullGulp
                 message = warnText 'warn', "'#{id}' is marked in blacklist.\n ┗━" + warnText 'reason', @list[id]
         else
             message = noticeText 'information', "'#{id}' is not marked in the blacklist."
-
-        if !quiet
+        unless quiet
             console.log message
 
-        if (strict is true) and blackListed
-            throw new Error message
-
+        if throwError then throw new Error()
         return blackListed
 
 
@@ -72,16 +71,16 @@ class CullGulp
             ids = ids.concat Object.keys meta.devDependencies
 
         blackListed = false
+        blackList = {}
         for id in ids
-            try
-              blackListed = blackListed or @check id, {strict, quiet}
-            catch error
-              if blackListed is false then blackListed = {}
-              blackListed[id] = @list[id]
+            checked = @check id, {strict, quiet, throwError:false}
+            blackListed = blackListed or checked
+            if blackListed then blackList[id] = @list[id]
 
         if blackListed
             if strict is true
-                throw new Error errorText 'error', 'some gulpplugins are marked in the blackList.'
+                console.log errorText 'error', 'some gulpplugins are marked in the blackList.'
+                throw new Error()
             else unless quiet
                 console.log warnText 'warn', 'some gulpplugins are marked in the blackList.'
         else unless quiet

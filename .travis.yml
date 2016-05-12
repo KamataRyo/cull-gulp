@@ -13,4 +13,4 @@ after_script:
   - "npm install -g istanbul"
   - "npm install -g codecov"
   - "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec ./spec/spec.js"
-  - "cat ./coverage/*/lcov.info | codecov"
+  - "cat ./coverage/lcov.info | codecov"

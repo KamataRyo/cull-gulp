@@ -1,6 +1,6 @@
 {
   "name": "cull-gulp",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "check if your dependencies blacklisted.",
   "main": "CullGulp.js",
   "engines": {

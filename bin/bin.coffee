@@ -23,7 +23,7 @@ if path?
         cullGulp.checkPackage path, {strict, quiet}
 else if name?
     action = (cullGulp) ->
-        cullGulp.check name, {strict, quiet}
+        cullGulp.check name, {strict, quiet, throwError: strict}
 else
     path = process.cwd()
     action = (cullGulp) ->

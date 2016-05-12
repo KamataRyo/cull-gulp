@@ -71,10 +71,9 @@ describe 'class `CullGulp`', ->
             new CullGulp blackListValidExample
                 .then (cullGulp) ->
                     try
-                        result = cullGulp.check 'gulp-bar', {strict:true, quiet:true}
+                        result = cullGulp.check 'gulp-bar', {strict:true, quiet:true, throwError:true}
                         result.should.be.true()
                     catch error
-                        (error instanceof Error).should.be.true()
                         done()
 
 
