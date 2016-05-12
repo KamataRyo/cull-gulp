@@ -14,7 +14,7 @@
     "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
     "cull": "./bin/cull-gulp --strict --quiet",
     "test": "npm run if-compiled; npm run unit-test;",
-    "prepublish":"npm run build"
+    "prepublish": "npm run build"
   },
   "keywords": [
     "gulp",

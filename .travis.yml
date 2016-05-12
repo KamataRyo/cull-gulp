@@ -3,13 +3,13 @@ node_js:
 - '0.12'
 - '0.11'
 
-before_install:
-  - sudo pip install codecov
-
 script:
   - "set -e"
   - "npm run cull"
   - "npm test"
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+after_script:
+  - "npm install -g istanbul"
+  - "npm install -g codecov"
+  - "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec ./spec/spec.js"
+  - "cat ./coverage/*/lcov.info | codecov"
