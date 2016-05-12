@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/KamataRyo/cull-gulp.svg?branch=master)](https://travis-ci.org/KamataRyo/cull-gulp)
 [![npm version](https://badge.fury.io/js/cull-gulp.svg)](https://badge.fury.io/js/cull-gulp)
+![dependencies](https://david-dm.org/KamataRyo/cull-gulp.svg)
 
 This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com/plugins/blackList.json).
 
@@ -18,7 +19,7 @@ This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com
 npm install --save-dev cull-gulp
 ```
 
-### or global
+### or in global
 
 ```
 npm install -g cull-gulp
