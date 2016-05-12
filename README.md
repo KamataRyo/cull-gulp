@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/KamataRyo/cull-gulp.svg?branch=master)](https://travis-ci.org/KamataRyo/cull-gulp)
 [![npm version](https://badge.fury.io/js/cull-gulp.svg)](https://badge.fury.io/js/cull-gulp)
 ![dependencies](https://david-dm.org/KamataRyo/cull-gulp.svg)
-![codecov.io](https://codecov.io/github/KamataRyo/cull-gulp/coverage.svg?branch=master)
-
+[![codecov](https://codecov.io/gh/KamataRyo/cull-gulp/branch/master/graph/badge.svg)](https://codecov.io/gh/KamataRyo/cull-gulp)
 
 This package checks gulpplugins which is marked in [blacklist](http://gulpjs.com/plugins/blackList.json).
 
