@@ -1,6 +1,6 @@
 {
   "name": "cull-gulp",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "check if your dependencies blacklisted.",
   "main": "CullGulp.js",
   "engines": {
@@ -9,7 +9,6 @@
   "bin": "./bin/cull-gulp",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js coffee",
-    "install": "npm run build",
     "if-compiled": "ls ./CullGulp.js; ls ./bin/bin.js",
     "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
     "cull": "./bin/cull-gulp --strict --quiet",
@@ -32,6 +31,7 @@
     "should": "^8.3.1"
   },
   "dependencies": {
+    "cli-color": "^1.1.0",
     "commander": "^2.9.0",
     "request": "^2.72.0"
   },
@@ -43,5 +43,7 @@
     "url": "https://github.com/KamataRyo/na-gulp/issues"
   },
   "homepage": "https://github.com/KamataRyo/na-gulp#readme",
-  "blackListURL": "http://gulpjs.com/plugins/blackList.json"
+  "config": {
+    "blackListURL": "http://gulpjs.com/plugins/blackList.json"
+  }
 }

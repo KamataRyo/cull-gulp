@@ -30,7 +30,7 @@ else
         cullGulp.checkPackage path, {strict, quiet}
 
 
-new CullGulp meta.blackListURL
+new CullGulp meta.config.blackListURL
     .then (cullGulp) ->
         action cullGulp
     .catch (error) ->

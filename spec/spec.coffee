@@ -30,13 +30,6 @@ describe 'class `CullGulp`', ->
         it 'should be a prototype function.', ->
             (typeof CullGulp).should.be.exactly 'function'
 
-        it 'should accept url asynchronously.', (done) ->
-            cullGulp = new CullGulp 'http://someURLasString'
-            cullGulp.should.have.property 'then'
-            cullGulp.catch (error) ->
-                (error instanceof Error).should.be.true()
-                done()
-
         it 'should accept black-list as an object asynchronously.(make it polimorphic to url request)', (done) ->
             cullGulp = new CullGulp blackListValidExample
             cullGulp.should.have.property 'then'
@@ -44,12 +37,14 @@ describe 'class `CullGulp`', ->
                 cullGulp.list.should.be.equal blackListValidExample
                 done()
 
+        it 'should fail if given non-effective url.', (done) ->
+            (new CullGulp "http://aaa.a").catch -> done()
+
         it 'should success if given effective url.', (done) ->
             new CullGulp "http://#{hostname}:#{port}"
                 .then (cullGulp) ->
                     cullGulp.list.should.deepEqual blackListValidExample
                     done()
-
 
     describe 'method `check`', ->
         it 'should be a function.', (done) ->

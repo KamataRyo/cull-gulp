@@ -1,8 +1,14 @@
 request = require 'request'
+color   = require 'cli-color'
 # unless Promise? then Promise = require 'es6-promise'
+errorText  = (label, message) -> "[#{color.red(label)}] #{message}"
+noticeText = (label, message) -> "[#{color.cyan(label)}] #{message}"
+warnText   = (label, message) -> "[#{color.yellow(label)}] #{message}"
+okText     = (label, message) -> "[#{color.green(label)}] #{message}"
 
 class CullGulp
     constructor: (arg) ->
+        # if passed as url..
         if typeof arg is 'string'
             @path = arg
             return new Promise (resolve, reject) =>
@@ -16,17 +22,17 @@ class CullGulp
                             @list = body
                             resolve @
                         else
-                            reject new Error 'invalid server response.'
+                            reject errorText 'error', 'invalid server response.'
                     else
-                        reject error # http request error
-
+                        reject errorText 'error', 'http error.'
+        # if passed as blacklist object..
         else if typeof arg is 'object'
             @list = arg
             return new Promise (resolve) =>
                 resolve @
         else
-            return new promise(resolve, reject) =>
-                reject new Error 'invalid argument.'
+            return new Promise(resolve, reject) =>
+                throw new Error ErrorText 'Error', 'invalid arguments.'
 
 
     check: (id, {strict, quiet}) ->
@@ -35,9 +41,12 @@ class CullGulp
 
         blackListed = id in Object.keys @list
         if blackListed
-            message = "[notice] `#{id}` is marked in blacklist. #{@list[id]}"
+            if strict
+                message = errorText 'error', "'#{id}' is marked in blacklist.\n ┗━" + errorText 'reason', @list[id]
+            else
+                message = warnText 'warn', "'#{id}' is marked in blacklist.\n ┗━" + warnText 'reason', @list[id]
         else
-            message = "[information] `#{id}` is not marked in the blacklist."
+            message = noticeText 'information', "'#{id}' is not marked in the blacklist."
 
         if !quiet
             console.log message
@@ -70,11 +79,13 @@ class CullGulp
               if blackListed is false then blackListed = {}
               blackListed[id] = @list[id]
 
-        if !quiet and !blackListed
-            console.log '[information] No gulpplugins marked in the blackList found.'
-
-        if (strict is true) and blackListed
-            throw new Error '[notice] some gulpplugins are marked in the blackList.',
+        if blackListed
+            if strict is true
+                throw new Error errorText 'error', 'some gulpplugins are marked in the blackList.'
+            else unless quiet
+                console.log warnText 'warn', 'some gulpplugins are marked in the blackList.'
+        else unless quiet
+            console.log okText 'ok', 'No gulpplugins marked in the blackList found.'
 
         return blackListed
 

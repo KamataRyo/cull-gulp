@@ -22,3 +22,11 @@ gulp.task 'test', ->
     test = require('./index')({scope: module, quiet:false})
 
 gulp.task 'coffee', ['coffee-app', 'coffee-spec', 'coffee-bin']
+
+gulp.task 'watch', ['coffee'], ->
+    gulp.watch [
+            './*.coffee', '!./gulpfile.coffee'
+            './spec/*.coffee'
+            './bin/*.coffee'
+        ]
+    , ['coffee']
