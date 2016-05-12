@@ -9,10 +9,10 @@
   "bin": "./bin/cull-gulp",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js coffee",
+    "install": "npm run build",
+    "if-compiled": "ls ./CullGulp.js; ls ./bin/bin.js",
     "unit-test": "./node_modules/mocha/bin/mocha ./spec/spec.js",
-    "if-compiled": "ls ./CullGulp.js; ls ./bin/bin.js; ls ./index.js",
     "cull": "./bin/cull-gulp --strict --quiet",
-    "pretest": "set -e;npm run build; npm run cull",
     "test": "npm run if-compiled; npm run unit-test;",
     "prepublish":"npm run build"
   },
