@@ -37,12 +37,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KamataRyo/na-gulp.git"
+    "url": "git+https://github.com/KamataRyo/cull-gulp.git"
   },
   "bugs": {
-    "url": "https://github.com/KamataRyo/na-gulp/issues"
+    "url": "https://github.com/KamataRyo/cull-gulp/issues"
   },
-  "homepage": "https://github.com/KamataRyo/na-gulp#readme",
+  "homepage": "https://github.com/KamataRyo/cull-gulp#readme",
   "config": {
     "blackListURL": "http://gulpjs.com/plugins/blackList.json"
   }
